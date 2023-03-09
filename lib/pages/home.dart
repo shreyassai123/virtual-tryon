@@ -53,12 +53,10 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20))),
                                       child: Center(
-                                        child: Text(
-                                          'Item $index',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall,
-                                        ),
+                                        // Add Image sunglasses.png from assets folder
+                                        child: Image(image: AssetImage('assets/sunglasses.png'))
+
+
                                       ),
                                     ),
                                   ),
