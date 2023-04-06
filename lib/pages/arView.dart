@@ -5,6 +5,7 @@ import 'package:deepar_flutter/deepar_flutter.dart';
 import 'dart:convert';
 
 import 'package:open_file/open_file.dart';
+import 'package:virtual_tryon/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +13,8 @@ void main() async {
 }
 
 class ARViewPage extends StatefulWidget {
-  const ARViewPage({Key? key}) : super(key: key);
+  final itemId;
+  const ARViewPage({Key? key, this.itemId}) : super(key: key);
 
   @override
   State<ARViewPage> createState() => _ARViewPageState();
@@ -31,14 +33,15 @@ class _ARViewPageState extends State<ARViewPage> {
         appBar: AppBar(
           title: const Text('View in AR'),
         ),
-        body: const Home(),
+        body: Home(itemId: widget.itemId,),
       ),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final itemId;
+  const Home({Key? key, this.itemId}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -96,7 +99,7 @@ class _HomeState extends State<Home> {
             _controller,
             onViewCreated: () {
               _controller.switchEffect(
-                  _assetEffectsPath + 'Sunglass.deepar');
+                  getItem(widget.itemId)!['ar'].toString());
             },
           ),
         ),
@@ -263,21 +266,34 @@ class _HomeState extends State<Home> {
 
   /// Add effects which are rendered via DeepAR sdk
   void _initEffects() {
+    // Either get all effects
     _getEffectsFromAssets(context).then((values) {
       _effectsList.clear();
       _effectsList.addAll(values);
 
       _maskList.clear();
+      _maskList.add(_assetEffectsPath + 'helmet.deepar');
 
       _filterList.clear();
+      // _filterList.add(_assetEffectsPath + 'burning_effect.deepar');
+      // _filterList.add(_assetEffectsPath + 'Hope.deepar');
 
       _effectsList.removeWhere((element) => _maskList.contains(element));
 
       _effectsList.removeWhere((element) => _filterList.contains(element));
     });
 
+    // OR
+
+    // Only add specific effects
+    // _effectsList.add(_assetEffectsPath+'burning_effect.deepar');
+    // _effectsList.add(_assetEffectsPath+'flower_face.deepar');
+    // _effectsList.add(_assetEffectsPath+'Hope.deepar');
+    // _effectsList.add(_assetEffectsPath+'viking_helmet.deepar');
   }
 
+  /// Get all deepar effects from assets
+  ///
   Future<List<String>> _getEffectsFromAssets(BuildContext context) async {
     final manifestContent =
         await DefaultAssetBundle.of(context).loadString('AssetManifest.json');

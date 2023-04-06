@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +13,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Container(
+      color: Colors.white,
+      child: 
+    Scaffold(
+      //background rgb(255, 163, 253)
+        backgroundColor: Color(0xff6C63FF).withOpacity(0.25),
         body: SafeArea(
             child: Padding(
       padding: EdgeInsets.all(20),
@@ -19,14 +26,22 @@ class _LoginPageState extends State<LoginPage> {
         Text(
           'Virtual Try On',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 40,
             fontWeight: FontWeight.w900,
           ),
         ),
         Expanded(
-          child: Container(),
+          child: SvgPicture.asset("assets/shopping.svg"),
         ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            //change color to #6C63FF
+            primary: Color(0xff6C63FF),
+            padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
           child: Text("LOGIN"),
           onPressed: () => {
             Navigator.push(
@@ -36,6 +51,6 @@ class _LoginPageState extends State<LoginPage> {
           },
         )
       ], crossAxisAlignment: CrossAxisAlignment.stretch),
-    )));
+    ))));
   }
 }

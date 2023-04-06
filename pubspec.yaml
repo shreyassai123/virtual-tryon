@@ -39,6 +39,7 @@ dependencies:
   model_viewer_plus: ^1.4.0
   deepar_flutter: ^0.0.5
   open_file: ^3.2.1
+  flutter_svg: ^1.1.6
 
 dev_dependencies:
   flutter_test:
